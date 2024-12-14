@@ -1,5 +1,5 @@
 services:
-  - type: background
+  - type: worker
     name: zookeeper
     env: docker
     dockerImage: bitnami/zookeeper:latest
@@ -8,7 +8,7 @@ services:
         value: "yes"
     plan: free
 
-  - type: background
+  - type: worker
     name: kafka
     env: docker
     dockerImage: bitnami/kafka:latest
@@ -16,11 +16,11 @@ services:
       - key: KAFKA_BROKER_ID
         value: "1"
       - key: KAFKA_ZOOKEEPER_CONNECT
-        value: zookeeper:2181
+        value: <ZOOKEEPER_PUBLIC_URL>:2181
       - key: KAFKA_LISTENERS
-        value: "PLAINTEXT://:9092"
+        value: "PLAINTEXT://0.0.0.0:9092"
       - key: KAFKA_ADVERTISED_LISTENERS
-        value: "PLAINTEXT://kafka:9092"
+        value: "PLAINTEXT://<KAFKA_PUBLIC_URL>:9092"
       - key: ALLOW_ANONYMOUS_LOGIN
         value: "yes"
     plan: free
