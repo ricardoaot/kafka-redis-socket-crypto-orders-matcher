@@ -1,25 +1,22 @@
 services:
-  - type: web
+  - type: background
     name: zookeeper
     env: docker
-    docker:
-      image: bitnami/zookeeper:latest
+    dockerImage: bitnami/zookeeper:latest
     envVars:
       - key: ALLOW_ANONYMOUS_LOGIN
         value: "yes"
     plan: free
-    healthCheckPath: /
 
-  - type: web
+  - type: background
     name: kafka
     env: docker
-    docker:
-      image: bitnami/kafka:latest
+    dockerImage: bitnami/kafka:latest
     envVars:
       - key: KAFKA_BROKER_ID
         value: "1"
       - key: KAFKA_ZOOKEEPER_CONNECT
-        value: "zookeeper:2181"
+        value: zookeeper:2181
       - key: KAFKA_LISTENERS
         value: "PLAINTEXT://:9092"
       - key: KAFKA_ADVERTISED_LISTENERS
@@ -27,4 +24,5 @@ services:
       - key: ALLOW_ANONYMOUS_LOGIN
         value: "yes"
     plan: free
-    healthCheckPath: /
+    dependsOn:
+      - zookeeper
