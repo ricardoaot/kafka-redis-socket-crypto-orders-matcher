@@ -1,0 +1,12 @@
+# Usar una imagen base de Kafka
+FROM bitnami/kafka:latest
+
+# Configurar variables de entorno
+ENV ALLOW_ANONYMOUS_LOGIN=yes
+
+# Exponer los puertos necesarios
+EXPOSE 9092
+EXPOSE 2181
+
+# Comando por defecto para iniciar Kafka
+CMD ["sh", "-c", "start-kafka.sh"]
